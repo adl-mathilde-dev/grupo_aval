@@ -1,0 +1,21 @@
+aval_subtheme.skin.default:
+   version: VERSION
+   header: true
+   css:
+      theme:
+         css/style.css: {}
+   js:
+      js/main.js: {}
+
+aval_subtheme.owl_carousel:
+   version: VERSION
+   header: true
+   css:
+      theme:
+         vendor/owl_carousel/assets/owl.carousel.min.css: {}
+         vendor/owl_carousel/assets/owl.theme.default.min.css: {}
+   js:
+      vendor/owl_carousel/owl.carousel.min.js: {}
+   dependencies:
+    - core/jquery
+    - core/drupal

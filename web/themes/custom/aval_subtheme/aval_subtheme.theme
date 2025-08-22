@@ -1,0 +1,66 @@
+<?php
+
+function aval_subtheme_preprocess_page(&$variables) {
+  global $base_url;
+
+  $current_theme = \Drupal::config('system.theme')->get('default');
+  $sub_theme = '';
+  $theme_handler = \Drupal::service('theme_handler');
+  if($theme_handler->themeExists($current_theme)){
+    $theme_handler = $theme_handler->getTheme($current_theme);
+    $theme_info = $theme_handler->info;
+    if(isset($theme_info['base theme']) && !empty($theme_info['base theme']) && strpos($theme_info['base theme'], 'avias_')){
+      $sub_theme = $current_theme;
+    }
+  }
+
+  $theme_path = \Drupal::service('extension.list.theme')->getPath('aval_subtheme');
+  
+  $variables['sticky_menu'] = theme_get_setting('sticky_menu');
+
+  $variables['preloader'] = theme_get_setting('preloader');
+ 
+  $variables['theme_path'] = $theme_path;
+
+  //Header setting -----------
+  $header = 'header';
+  if(theme_get_setting('default_header')){
+    $header = theme_get_setting('default_header');
+  }
+  
+  $header_skin = '';
+  if($sub_theme){
+    $theme_path_sub = \Drupal::service('extension.list.theme')->getPath($sub_theme);
+    if(file_exists($theme_path_sub . '/templates/page/' . trim($header) . '.html.twig')){
+      $header_skin  = $theme_path_sub . '/templates/page/' . trim($header) . '.html.twig';
+    }elseif(file_exists($theme_path . '/templates/page/' . trim($header) . '.html.twig')){
+      $header_skin  = $theme_path . '/templates/page/' . trim($header) . '.html.twig';
+    }
+  }else{
+    if(file_exists($theme_path . '/templates/page/' . trim($header) . '.html.twig')){
+      $header_skin  = $theme_path . '/templates/page/' . trim($header) . '.html.twig';
+    }
+  }
+  if(empty($header_skin)) $header_skin = $theme_path . '/templates/page/header.html.twig';
+
+  $variables['theme_path'] = $theme_path;
+  
+  $variables['header_skin'] = $header_skin;
+ 
+}
+
+function aval_subtheme_preprocess_html(&$variables) {
+  $variables['#attached']['library'][] = 'aval_subtheme/aval_subtheme.skin.default';
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    // Obtenemos el tipo de contenido.
+    $content_type = $node->getType();
+    // Agrega la clase al body.
+    $variables['attributes']['class'][] = 'node-type-' . str_replace('_', '-', $content_type);
+  }
+  // Get the rendered HTML content.
+  $html = &$variables['page']['content']['#markup'];
+  
+  // Update the content in the variables array.
+  $variables['page']['content']['#markup'] = $html;
+}

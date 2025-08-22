@@ -1,0 +1,16 @@
+{#
+  Sobrescribe el bloque "dropdown_language".
+  Variables disponibles:
+    - label: El título del bloque (si está configurado)
+    - content: El contenido renderizado (incluye el dropbutton)
+#}
+
+<div class="mi-dropdown-language">
+  {% if label %}
+    <h3>{{ label }}</h3>
+  {% endif %}
+
+  <div class="dropdown-wrapper">
+    {{ content }}
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Theme override for a set of links.
+ *
+ * @see template_preprocess_links()
+ */
+#}
+<div class="languaje-switcher-aval">
+{% if links -%}
+  {%- if heading -%}
+    {%- if heading.level -%}
+      <{{ heading.level }}{{ heading.attributes }}>{{ heading.text }}</{{ heading.level }}>
+    {%- else -%}
+      <h2{{ heading.attributes }}>{{ heading.text }}</h2>
+    {%- endif -%}
+  {%- endif -%}
+  {%- for key, item in links -%}
+    {% if not (item.text_attributes and 'active-language' in item.text_attributes.class) %}
+      {% set text = item.link['#title'] %}
+      <img src="{{ file_url(directory ~ '/img/flags/' ~ text ~ '.png') }}" alt="{{ text }}" /> {{ item.link }}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif %}
+</div>

@@ -1,0 +1,35 @@
+name: AVAL sub-theme
+type: theme
+description: 'Tema del grupo AVAL (Extiende del tema Notech)'
+package: gaviasthemes
+base theme: notech
+libraries:
+  - aval_subtheme/global-styling
+  - aval_subtheme/owl_carousel
+
+regions:
+  offcanvas: 'After Offcanvas'
+  topbar: 'Topbar'
+  topbar_right: 'Topbar Right'
+  quick_side: 'Quick Side'
+  search: 'Search'
+  branding: 'Branding'
+  header_right: 'Header Right'
+  breadcrumbs: 'Breadcrumbs'
+  help: 'Help'
+  main_menu: 'Main menu'
+  slideshow_content: 'Slideshow'
+  before_content: 'Before Content'
+  content: 'Main content'
+  sidebar_left: 'Sidebar Left'
+  sidebar_right: 'Sidebar Right'
+  after_content: 'After Content'
+  footer: 'Footer'
+  copyright: 'Copyright'
+  login: 'Login'
+  register: 'Register'
+  other: 'Other'
+
+version: '1.0.0'
+core_version_requirement: ^9 || ^10
+project: 'drupal'

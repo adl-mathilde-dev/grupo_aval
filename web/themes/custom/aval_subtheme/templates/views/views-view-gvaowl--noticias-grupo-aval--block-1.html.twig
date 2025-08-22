@@ -1,0 +1,44 @@
+{% if attributes -%}
+   <div{{ attributes }}>
+{% endif %}
+   
+   {% if title %}
+      <h3>{{ title }}</h3>
+   {% endif %}
+
+    {% for row in rows %}
+    {% set photo = file_url(row['content']['#row']._entity.field_image.entity.fileuri) %}
+    {% set url = path('entity.node.canonical', {'node':  row['content']['#row']._entity.id}) %}
+         <div>
+            <div class="blur-filter">
+                <div>          
+                    <a href="{{ url }}">
+                        <img src={{ photo }} class="img-responsive" alt="{{ row['content']['#row']._entity.title.value }}"/>
+                    </a>
+                </div>
+                <div class="carousel-title-link">    
+                    <div class="carousel-title">
+                        <a href="{{ url }}">
+                            {{ row['content']['#row']._entity.title.value }}
+                        </a>
+                    </div>
+                    <div  class="carousel-link">
+                        <a href="{{ url }}">
+                            >
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-summary">
+                <div class="carousel-title-blur">{{ row['content']['#row']._entity.title.value }}</div>
+                <div class="carousel-sumary-blur">{{ row['content']['#row']._entity.body.value|raw }}</div>
+                <a href="{{ url }}" class="btn btn-primary">
+                {{ 'Conoce más >'|t }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% if attributes -%}
+    </div>
+{% endif %}
